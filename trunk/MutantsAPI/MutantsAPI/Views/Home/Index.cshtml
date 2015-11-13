@@ -1,0 +1,30 @@
+﻿<div class="jumbotron">
+    <h1>Validador de ADN Mutante</h1>
+    <p class="lead">Ingregar cadena de ADN para detectar a un mutante</p>
+    <p style="font-size: smaller"><strong>Ejemplo: </strong>"ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"</p>
+    <br />
+    <p><input type="text" id="txtADN" /> <a href="" class="btn btn-primary btn-lg" onclick="Validar()">Validar Mutante</a></p>
+</div>
+<script>
+    function Validar() {
+        if (document.getElementById("txtADN").value.trim() != '')
+        {
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({ "cadena": document.getElementById("txtADN").value.trim() }),
+                url: "../Mutants/isMutant",
+                contentType: "application/json",
+                success: function (data) {
+                    if (data == true)
+                        alert("Es Mutante");
+                    else
+                        alert("No es Mutante");
+                },
+                error: function (data) { alert("error"); }
+            });
+        }
+        else {
+            Alert("Debe ingresar una cadena a validar");
+        }
+    }
+</script>
